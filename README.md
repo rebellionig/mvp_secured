@@ -1,23 +1,22 @@
-# Oil & Gas Asset Maintenance MVP — SECURE VERSION
+Oil & Gas Asset Maintenance MVP - SECURE VERSION
 
 Вариант 2: Нефтегазовая отрасль — техническое обслуживание активов  
 Исправленная версия с устранёнными уязвимостями по CWE.
 
-## Запуск
+Запуск
 
-```bash
+bash
+
 pip install -r requirements.txt
 
-# Создайте .env из примера и задайте реальный секрет
 cp .env.example .env
-# Отредактируйте .env: укажите JWT_SECRET_KEY
 
 python app/main.py
-```
+
 
 Сервер: http://localhost:5001
 
-## Тестовые пользователи
+Тестовые пользователи
 
 | username    | password    | role      |
 |-------------|-------------|-----------|
@@ -25,7 +24,7 @@ python app/main.py
 | engineer1   | engineer1   | engineer  |
 | operator1   | operator1   | operator  |
 
-## Эндпоинты
+Эндпоинты
 
 | Метод  | URL                              | Роли                   | Описание                    |
 |--------|----------------------------------|------------------------|-----------------------------|
@@ -38,42 +37,42 @@ python app/main.py
 | POST   | /work-orders/<id>/close          | admin, engineer*       | Закрыть заявку              |
 | GET    | /report                          | admin, engineer        | Экспорт отчёта              |
 
-*engineer — только назначенные ему заявки
+!engineer — только назначенные ему заявки
 
-## Пример использования
 
-```bash
+bash
+
 # Логин
 curl -X POST http://localhost:5001/login \
   -H "Content-Type: application/json" \
   -d '{"username":"engineer1","password":"engineer1"}'
 
-# Получить оборудование (нужен токен)
+Получить оборудование (нужен токен)
 curl http://localhost:5001/equipment \
   -H "Authorization: Bearer <TOKEN>"
 
-# Создать заявку
+Создать заявку
 curl -X POST http://localhost:5001/work-orders \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{"equipment_id":1,"description":"Плановое ТО насоса"}'
 
-# Сменить статус
+Сменить статус
 curl -X PATCH http://localhost:5001/work-orders/1/status \
   -H "Authorization: Bearer <TOKEN>" \
   -H "Content-Type: application/json" \
   -d '{"status":"in_progress"}'
 
-# Закрыть заявку
+Закрыть заявку
 curl -X POST http://localhost:5001/work-orders/1/close \
   -H "Authorization: Bearer <TOKEN>"
 
-# Экспорт отчёта
+Экспорт отчёта
 curl http://localhost:5001/report \
   -H "Authorization: Bearer <TOKEN>"
-```
 
-## Устранённые уязвимости
+
+Устранённые уязвимости
 
 | CWE     | Описание                                   | Исправление                                      |
 |---------|--------------------------------------------|--------------------------------------------------|
